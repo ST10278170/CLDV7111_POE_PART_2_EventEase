@@ -1,0 +1,84 @@
+@model CLDV7111_POE_PART_1_EventEase.Models.Event
+
+@{
+    ViewData["Title"] = "Edit Event";
+}
+
+<h1>Edit Event</h1>
+
+<h4>Event</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Hidden ID -->
+            <input type="hidden" asp-for="EventId" />
+
+            <!-- Event Name -->
+            <div class="form-group">
+                <label asp-for="EventName" class="control-label"></label>
+                <input asp-for="EventName" class="form-control" />
+                <span asp-validation-for="EventName" class="text-danger"></span>
+            </div>
+
+            <!-- Event Date -->
+            <div class="form-group">
+                <label asp-for="EventDate" class="control-label"></label>
+                <input asp-for="EventDate" type="date" class="form-control" />
+                <span asp-validation-for="EventDate" class="text-danger"></span>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <!-- Current Image Preview -->
+            <div class="form-group">
+                <label>Current Image</label><br />
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" width="150" height="100" style="object-fit:cover; border-radius:4px;" />
+                }
+                else
+                {
+                    <span>No Image</span>
+                }
+            </div>
+
+            <!-- Upload New Image -->
+            <div class="form-group">
+                <label>Upload New Image</label>
+                <input type="file" name="ImageFile" class="form-control" />
+            </div>
+
+            <!-- Venue Dropdown -->
+            <div class="form-group">
+                <label asp-for="VenueId" class="control-label">Venue</label>
+                <select asp-for="VenueId" class="form-control" asp-items="ViewBag.VenueId"></select>
+                <span asp-validation-for="VenueId" class="text-danger"></span>
+            </div>
+
+            <!-- Save Button -->
+            <div class="form-group mt-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
